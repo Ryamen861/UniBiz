@@ -1,4 +1,3 @@
-use core::num;
 use std::io;
 mod tools;
 fn main() {
@@ -18,12 +17,7 @@ fn main() {
     let row_three: String = format!("Avg GPA: {}", &avg_gpa);
 
     println!("{}", tools::pad(title, false));
-    
     println!("----------------------------------------------------------------------------------------------");
-    // println!("|                                                                                            |");
-    // println!("|                                                                                            |");
-    // println!("|                                                                                            |");
-
     println!("{}", tools::pad(row_one, true));
     println!("{}", tools::pad(row_two, true));
     println!("{}", tools::pad(row_three, true));
