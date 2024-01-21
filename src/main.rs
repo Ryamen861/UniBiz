@@ -1,4 +1,7 @@
 use std::io;
+use std::time::Duration;
+use std::time;
+use tokio::time::sleep;
 mod tools;
 fn main() {
 
@@ -8,20 +11,64 @@ fn main() {
     // generate students
     let mut num_of_students: i32 = 0;
     let mut avg_gpa: f32 = 3.2;
+    let mut day: i32 = 1;
 
+    next_page();
     welcome(&name, &university, &money, &num_of_students, &avg_gpa);
+    wait(4);
+    next_page();
+    
+    let mut now = time::Instant::now();
 
-    let title: String = format!("Prez {} of {} University", &name, &university);
-    let row_one: String = format!("Funds: ${}", &money);
-    let row_two: String = format!("# of Students: {}", &num_of_students);
-    let row_three: String = format!("Avg GPA: {}", &avg_gpa);
+    loop {
+        // format strings for dashboard
+        let title: String = format!("Prez {} of {} University", &name, &university);
+        let row_one: String = format!("Funds: ${}", &money);
+        let row_two: String = format!("# of Students: {}", &num_of_students);
+        let row_three: String = format!("Avg GPA: {}", &avg_gpa);
+        let time: String = format!("Day: {}", &day);
+        
+        // display dashboard
+        println!("{}", tools::pad(title, false));
+        println!("----------------------------------------------------------------------------------------------");
+        println!("{}", tools::pad(row_one, true));
+        println!("{}", tools::pad(row_two, true));
+        println!("{}", tools::pad(row_three, true));
+        println!("----------------------------------------------------------------------------------------------");
+        println!("{}", tools::pad(time, false));
 
-    println!("{}", tools::pad(title, false));
-    println!("----------------------------------------------------------------------------------------------");
-    println!("{}", tools::pad(row_one, true));
-    println!("{}", tools::pad(row_two, true));
-    println!("{}", tools::pad(row_three, true));
-    println!("----------------------------------------------------------------------------------------------");
+        if now.elapsed().as_secs() > 2 as u64 {
+            day += 1;
+            now -= now.elapsed();
+        } else {
+            let mut action: i32;
+            let attempt_ask = tokio::time::timeout(Duration::from_secs(1), get_action(&mut action));
+                                                                                                                // for tmrw me: figure this out
+            // and also, I am getting into async/await/multi threading, maybe avoid altogether
+            if action == 123 {
+                break;
+                // save changes sequence
+            }
+        }
+
+        next_page();
+    }
+
+}
+
+async fn get_action(a: &mut i32){
+    loop {
+        let mut action: String = String::new();
+        io::stdin().read_line(&mut action).expect("Error getting action");
+
+        next_page();
+        let action: i32 = match action.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+        *a = action;
+        break;
+    }
 }
 
 fn get_name() -> String {
@@ -49,4 +96,13 @@ fn welcome(name: &String, uni: &String, money: &i32, stu: &i32, gpa: &f32) {
     println!("  {} students currently enrolled", stu);
     println!("  They have an average gpa of {}", gpa);
     println!("\n    We hope you will develop the university into a prominent, impactful community.")
+}
+
+fn next_page() {
+    println!("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+}
+
+#[tokio::main]
+async fn wait(sec: i32) {
+    sleep(Duration::from_millis((sec * 1000) as u64)).await;
 }

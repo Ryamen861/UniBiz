@@ -33,3 +33,7 @@ Daily Schedule:
     meet with admissions team to scout students
 
 to do: dictionary [West hall construction, setting up graduation]
+
+
+someday make dashboard resizable
+setup calendar
