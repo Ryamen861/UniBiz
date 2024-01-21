@@ -30,4 +30,6 @@ Daily Schedule:
     option (interview)
     option ()
 
+    meet with admissions team to scout students
+
 to do: dictionary [West hall construction, setting up graduation]
