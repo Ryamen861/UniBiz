@@ -3,6 +3,7 @@ use std::time::Duration;
 use std::time;
 use tokio::time::sleep;
 mod tools;
+mod student;
 fn main() {
 
     let name: String = get_name();
@@ -37,18 +38,10 @@ fn main() {
         println!("----------------------------------------------------------------------------------------------");
         println!("{}", tools::pad(time, false));
 
-        if now.elapsed().as_secs() > 2 as u64 {
-            day += 1;
-            now -= now.elapsed();
-        } else {
-            let mut action: i32;
-            let attempt_ask = tokio::time::timeout(Duration::from_secs(1), get_action(&mut action));
-                                                                                                                // for tmrw me: figure this out
-            // and also, I am getting into async/await/multi threading, maybe avoid altogether
-            if action == 123 {
-                break;
-                // save changes sequence
-            }
+        let action: i32 = get_action();
+        if action == 123 {
+            break;
+            // save changes sequence
         }
 
         next_page();
@@ -56,7 +49,7 @@ fn main() {
 
 }
 
-async fn get_action(a: &mut i32){
+fn get_action() -> i32{
     loop {
         let mut action: String = String::new();
         io::stdin().read_line(&mut action).expect("Error getting action");
@@ -66,8 +59,7 @@ async fn get_action(a: &mut i32){
             Ok(num) => num,
             Err(_) => continue,
         };
-        *a = action;
-        break;
+        return action
     }
 }
 
