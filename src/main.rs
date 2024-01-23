@@ -1,11 +1,21 @@
 use std::io;
 use std::time::Duration;
 use std::time;
-use student::make_student;
 use tokio::time::sleep;
+use student::StudentManager;
+use std::fs;
 mod tools;
 mod student;
 fn main() {
+    let name_pool: Vec<String> = get_student_names();
+
+    let mut sm: StudentManager = StudentManager {
+        id: 0,
+        students: vec![],
+    };
+    for _ in 0..20_000 {
+        // sm.make_student();
+    }
 
     let name: String = get_name();
     let university: String = get_college();
@@ -97,4 +107,8 @@ fn next_page() {
 #[tokio::main]
 async fn wait(sec: i32) {
     sleep(Duration::from_millis((sec * 1000) as u64)).await;
+}
+
+fn get_student_names() -> Vec<String> {
+    // fs::read_to_string("pool/names.txt")
 }
