@@ -11,7 +11,6 @@ pub struct Student {
     year: i8,
     gpa: f32,
     minor: Option<String>
-
 }
 
 struct Id {
