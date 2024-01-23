@@ -1,6 +1,7 @@
 use std::io;
 use std::time::Duration;
 use std::time;
+use student::make_student;
 use tokio::time::sleep;
 mod tools;
 mod student;
@@ -9,7 +10,6 @@ fn main() {
     let name: String = get_name();
     let university: String = get_college();
     let mut money: i32 = 20_000;
-    // generate students
     let mut num_of_students: i32 = 0;
     let mut avg_gpa: f32 = 3.2;
     let mut day: i32 = 1;
