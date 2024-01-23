@@ -1,6 +1,8 @@
 use std::io;
+use std::os::raw;
 use std::time::Duration;
 use std::time;
+use tokio::io::split;
 use tokio::time::sleep;
 use student::StudentManager;
 use std::fs;
@@ -110,5 +112,8 @@ async fn wait(sec: i32) {
 }
 
 fn get_student_names() -> Vec<String> {
-    // fs::read_to_string("pool/names.txt")
+    let raw_name_data = fs::read_to_string("pool/names.txt").expect("Unable to read name-file");
+    let split_data = raw_name_data.split("\n");
+    let data: Vec<String> = split_data.into_iter().map(|name| name.to_string()).collect();
+    return data
 }

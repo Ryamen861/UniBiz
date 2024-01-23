@@ -39,6 +39,7 @@ someday make dashboard resizable
 setup calendar
 
 Day 1 (1/21/24)- tools, dashboard, starting setup
+Day 2 (1/22/24)- started making student module, edited timing, added a pool of names
 view schedule, different actions, make students
 be able to add to major and minor pool as you hire professors and build buildings
     # no matter building
